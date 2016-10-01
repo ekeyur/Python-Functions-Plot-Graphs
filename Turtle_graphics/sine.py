@@ -6,6 +6,7 @@ def f(x):
 
 xs = range(-5,6)
 ys = []
+
 for x in xs:
     ys.append(f(x))
 
