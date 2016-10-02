@@ -17,6 +17,7 @@ def savefile():
 
 user_input = 0
 while user_input != 6:
+
     print "\n"
     print "Electronic Phone Book"
     print "====================="
