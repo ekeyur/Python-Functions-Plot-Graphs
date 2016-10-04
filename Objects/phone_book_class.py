@@ -1,39 +1,39 @@
 import pickle
 from os.path import exists
 
-phone_book = []
+book = []
 #open the file where the phone numbers will be saved in a write mode
-# if exists('phone_book_class.pickle'):
-#     print 'Loading phone book.'
-#     myfile = open('phone_book_class.pickle','rb')
-#     # with open('phone_book_class.pickle','r') as pickled_file:
-#     phone_book = pickle.load(myfile)
-#     myfile.close()
+
+class Entry(object):
+    def __init__(this, name, cell,home):
+        this.name = name
+        this.cell = cell
+        this.home = home
+
+    def retrieve(this,name):
+        print "%s cell # : %s" % (this.name,this.cell)
+        print "%s home # : %s" % (this.name,this.home)
+
+
+if exists('phone_book_class.pickle'):
+    print 'Loading phone book.'
+    myfile = open('phone_book_class.pickle','r')
+    book = pickle.load(myfile)
+    myfile.close()
+
+else:
+
+    book = []
 
 def savefile(phone):
-    myfile = open('phone_book_class.pickle','wb')
-    for obj in phone_book:
-        pickle.dump(obj,myfile)
+    # with open('phone_book_class.pickle','wb') as pf:
+    #     pf.dump(obj,myfile)
+    myfile = open('phone_book_class.pickle','w')
+    pickle.dump(phone,myfile)
     myfile.close()
 # class Contact(object):
 #     def __init__(this, contact):
 #         this.contact = Phonebook
-
-class Entry(object):
-    def __init__(this, name, phones):
-        this.name = name
-        this.phone = phones
-
-
-
-class Phone(object):
-    def __init__(this, cell, home):
-        this.cell = cell
-        this.home = home
-
-    def retrieve(this):
-        print "%s cell # : %s" % (this.name,this.cell)
-        print "%s home # : %s" % (this.name,this.home)
 
 user_input = 0
 
@@ -51,42 +51,32 @@ while user_input != 5:
 
 # Retrieve an entry
     if (user_input == 1):
-        # print phone_book
-        #name = raw_input("Name : ")
-        for n in range(len(phone_book)):
-            print n
-
+        user = raw_input("Name? :")
+        for entry in book:
+            if entry.name == user:
+                print "%s : home: %s, cell: %s" %(entry.name,entry.home,entry.cell)
 # Add an entry
     if user_input == 2:
         name = raw_input("Please enter person's name: ")
         home = raw_input("Please enter person's home number: ")
         cell = raw_input("Please enter person's cell number: ")
-
-        phone = Phone(home,cell)
-        entry = Entry(name,phone)
-        phone_book.append(entry)
-
+        for entry in book:
+            if not entry.name == name:
+                entry = Entry(name,cell,home)
+                book.append(entry)
         print "%s is saved" % name
+
+    if user_input == 3:
+        name = raw_input("Please enter person's name: ")
+        for entry in book:
+            if entry.name == name:
+                book.pop(book.index(entry))
+                print "%s has been successfully deleted from phone book" % name
+
+    if (user_input == 4):
+        for entry in book:
+            print "%s : home: %s, cell: %s" %(entry.name,entry.home,entry.cell)
+
+    if (user_input == 5):
         pass
-
-savefile(entry)
-
-
-
-
-    # if (user_input == 3):
-    #     name = raw_input("Please enter person's name: ")
-    #     if name in phone_book:
-    #         del phone_book[name]
-    #         print "%s has been successfully deleted from phone book" % name
-    #     else:
-    #         print "%s doesn't exist in the phone_book" % name
-    #
-    # if (user_input == 4):
-    #     print phone_book
-    #
-    # if (user_input == 5):
-    #     savefile()
-    #     pass
-    # if (user_input == 6):
-    #     pass
+    savefile(book)
